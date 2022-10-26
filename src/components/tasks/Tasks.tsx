@@ -1,24 +1,37 @@
 import styles from './Tasks.module.css'
+import { GrAddCircle } from 'react-icons/gr'
 import add from '../../assets/img/add.svg'
 import Clipboard from '../../assets/img/Clipboard.svg'
 import { useState } from 'react'
-import { Task } from './Task'
+import { Task, TaskProps } from './Task'
+
 export function Tasks() {
 
-    const [tasks, setTasks] = useState(1)
+    const [tasks, setTasks] = useState<TaskProps[]>([])
 
+    function newTask(description: string) {
+        const newsTasks: TaskProps = {
+            id: Math.random(),
+            isChecked: false,
+            description: description
+        }
+        setTasks(oldState => [
+            ...oldState, newsTasks
+        ])
+    }
     return (
         <div className={styles.container}>
-            <div className={styles.newTask}>
+            <form className={styles.newTask}>
                 <input
                     placeholder="Adicione uma nova tarefa"
                     type="text"
                 />
-                <div className={styles.button}>
-                    <span>Criar</span>
+
+                <button className={styles.button}>
+                    Criar
                     <img src={add} alt="" />
-                </div>
-            </div>
+                </button>
+            </form>
 
             <div className={styles.containerTasks}>
                 <div className={styles.header}>
@@ -28,10 +41,10 @@ export function Tasks() {
                     </div>
                     <div>
                         <span className={styles.concluidas}>Concluídas</span>
-                        <span className={styles.number}>0</span>
+                        <span className={styles.number}>{tasks?.length}</span>
                     </div>
                 </div>
-                {tasks <= 0 ?
+                {tasks?.length <= 0 ?
                     <div className={styles.tasksNull}>
                         <div>
                             <img src={Clipboard} alt="" />
@@ -44,7 +57,7 @@ export function Tasks() {
                     </div>
                     :
                     <div className={styles.tasksActive}>
-                        <Task/>
+                        <Task description='' id={1} isChecked={true} />
                     </div>
                 }
 
