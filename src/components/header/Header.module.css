@@ -1,6 +1,6 @@
 .header{
     background-color:var(--gray-700);
-    height:14.28rem;
+    height:16.66rem;
     widht:100%;
     display:flex;
     flex-direction:row;
@@ -9,9 +9,12 @@
     align-items:center;
 }
 .header span{
-    color: var(--blue-200)
-}
-.header h1{
     color: var(--purple-600);
+
+}
+.header p{
+    font-size:40px;
+    font-weight:700;
+    color: var(--blue-200);
     margin:0.85rem
 }

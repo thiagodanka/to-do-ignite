@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Header } from './components/header/Header'
+import { Tasks } from './components/tasks/Tasks'
 
 
 
@@ -9,6 +10,7 @@ function App() {
   return (
     <>
       <Header />
+      <Tasks />
     </>
   )
 }
