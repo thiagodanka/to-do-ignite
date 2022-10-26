@@ -1,0 +1,19 @@
+.container{     
+    max-width: 737px;
+    height:4.5rem;
+    margin: 0.75rem auto;
+    border-radius: 0.5rem;    
+    background-color:var(--gray-500);
+    border:1px solid var(--gray-300);
+    padding:1.2rem;
+    box-sizing:border-box;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:14px;
+    font-weight:400;
+  }
+.container p{
+  margin:1.5rem;
+}     
+  

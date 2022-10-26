@@ -1,5 +1,5 @@
   .container{     
-    max-width: 637px;
+    max-width: 737px;
     margin: 0 auto;
     border-radius: 1rem;   
    
@@ -30,11 +30,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    cursor:pointer;
     padding: 14px;
     transition: 0.2s;    
   }
 .button img{
+
     height:13px;
     margin-left:5px;
   }
@@ -61,7 +62,7 @@
     color: var(--purple-400)
 }
 .header{
-    width:100%;
+    width:100%;   
     display : flex;
     justify-content:space-between;
     align-items:center;
@@ -85,4 +86,8 @@ margin:1rem
 }
 .noWeight{
     font-weight:400;
+}
+.tasksActive{
+    width:100%;
+    margin: 1.5rem auto;
 }

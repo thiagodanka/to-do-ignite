@@ -2,9 +2,10 @@ import styles from './Tasks.module.css'
 import add from '../../assets/img/add.svg'
 import Clipboard from '../../assets/img/Clipboard.svg'
 import { useState } from 'react'
+import { Task } from './Task'
 export function Tasks() {
 
-    const [tasks, setTasks] = useState(0)
+    const [tasks, setTasks] = useState(1)
 
     return (
         <div className={styles.container}>
@@ -42,7 +43,9 @@ export function Tasks() {
 
                     </div>
                     :
-                    <div className={styles.tasksActive}></div>
+                    <div className={styles.tasksActive}>
+                        <Task/>
+                    </div>
                 }
 
             </div>
