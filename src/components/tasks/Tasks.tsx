@@ -1,9 +1,10 @@
 import styles from './Tasks.module.css'
-import { GrAddCircle } from 'react-icons/gr'
 import add from '../../assets/img/add.svg'
 import Clipboard from '../../assets/img/Clipboard.svg'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
+import trash from '../../assets/img/trash.svg'
 import { Task } from './Task'
+
 
 
 interface TaskProps {
@@ -14,8 +15,16 @@ interface TaskProps {
 
 export function Tasks() {
 
+    function handleToggleTaskCompletion(idTask: number) {
+        const toggleCompletion = tasks.map(task => task.id == idTask ? {
+            ...task,
+            isChecked: !task.isChecked
+        } : task)
+        setTasks(toggleCompletion)
+    }
     const [tasks, setTasks] = useState<TaskProps[]>([])
     const [description, setDescription] = useState('')
+
 
     function handleNewTask(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
@@ -23,11 +32,12 @@ export function Tasks() {
         const newTask: TaskProps = {
             id: Math.random(),
             description: description,
-            isChecked: true,
+            isChecked: false,
         }
         setTasks(oldState => [...oldState, newTask])
         setDescription('')
     }
+
     function handleRemove(id: number) {
         const searchTask = tasks.filter(task => task.id != id);
         setTasks(searchTask)
@@ -57,7 +67,7 @@ export function Tasks() {
                     </div>
                     <div>
                         <span className={styles.concluidas}>Concluídas</span>
-                        <span className={styles.number}>{activeQuantity?.length}</span>
+                        <span className={styles.number}>{activeQuantity?.length} de {tasks?.length}</span>
                     </div>
                 </div>
                 {tasks.length <= 0 ?
@@ -73,12 +83,13 @@ export function Tasks() {
                     :
                     <>
                         {tasks.map(task => (
-                            <div className={styles.tasksActive}>
+                            <div key={task.id} className={styles.tasksActive}>
                                 <Task
-                                    onClick={() => handleRemove(task.id)}
-                                    description={task.description}
+                                    setChecked={() => handleToggleTaskCompletion(task.id)}
                                     Id={task.id}
+                                    description={task.description}
                                     isChecked={task.isChecked}
+                                    onClick={() => handleRemove(task.id)}
                                 />
                             </div>
                         ))}

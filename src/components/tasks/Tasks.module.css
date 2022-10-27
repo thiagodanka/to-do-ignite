@@ -89,5 +89,55 @@ margin:1rem
 }
 .tasksActive{
     width:100%;
-    margin: 1.5rem auto;
+    margin: 1.33rem auto;
+}
+
+.containerActive{     
+  max-width: 737px;
+  height:4.5rem;    
+  border-radius: 0.5rem;    
+  background-color:var(--gray-500);
+  border:1px solid var(--gray-400);
+  padding:1.2rem;
+  box-sizing:border-box;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:14px;
+  font-weight:400;
+}
+.containerActive p{
+margin:1.5rem;
+flex:1;
+}     
+.containerActive button{
+border:none;
+background-color:transparent !important;
+}
+
+.containerActive input[type="checkbox"]{
+display:none
+}
+.containerActive input[type="checkbox"]+label:before{
+content:"";
+display:inline-block;
+height:15px;
+width:15px;
+border-radius:1rem;
+border:2px solid var(--blue-200);
+}
+.containerActive input[type="checkbox"]:checked+label:before{
+content:"";
+display:inline-block;
+height:15px;
+width:15px;
+border-radius:1rem;
+border:2px solid var(--purple-600); 
+background:url("../../assets/img/check.svg")no-repeat;
+background-color:var(--purple-600);
+background-size:12px 12px;
+background-position: center;
+}
+.containerActive .isChecked{
+text-decoration: line-through;
 }
