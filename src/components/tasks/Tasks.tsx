@@ -2,32 +2,48 @@ import styles from './Tasks.module.css'
 import { GrAddCircle } from 'react-icons/gr'
 import add from '../../assets/img/add.svg'
 import Clipboard from '../../assets/img/Clipboard.svg'
-import { useState } from 'react'
-import { Task, TaskProps } from './Task'
+import { ChangeEvent, useState } from 'react'
+import { Task } from './Task'
+
+
+interface TaskProps {
+    id: number
+    isChecked: boolean,
+    description: string,
+}
 
 export function Tasks() {
 
     const [tasks, setTasks] = useState<TaskProps[]>([])
+    const [description, setDescription] = useState('')
 
-    function newTask(description: string) {
-        const newsTasks: TaskProps = {
+    function handleNewTask(event: React.MouseEvent<HTMLButtonElement>) {
+        event.preventDefault()
+        if (!description) return
+        const newTask: TaskProps = {
             id: Math.random(),
-            isChecked: false,
-            description: description
+            description: description,
+            isChecked: true,
         }
-        setTasks(oldState => [
-            ...oldState, newsTasks
-        ])
+        setTasks(oldState => [...oldState, newTask])
+        setDescription('')
     }
+    function handleRemove(id: number) {
+        const searchTask = tasks.filter(task => task.id != id);
+        setTasks(searchTask)
+    }
+    const activeQuantity = tasks.filter(task => task.isChecked === true);
     return (
         <div className={styles.container}>
-            <form className={styles.newTask}>
+            <form className={styles.newTask} >
                 <input
                     placeholder="Adicione uma nova tarefa"
                     type="text"
+                    onChange={(e) => setDescription(e.target.value)}
+                    value={description}
                 />
 
-                <button className={styles.button}>
+                <button type='submit' onClick={handleNewTask} className={styles.button}>
                     Criar
                     <img src={add} alt="" />
                 </button>
@@ -37,14 +53,14 @@ export function Tasks() {
                 <div className={styles.header}>
                     <div>
                         <span className={styles.criadas}>Tarefas criadas</span>
-                        <span className={styles.number}>0</span>
+                        <span className={styles.number}>{tasks?.length}</span>
                     </div>
                     <div>
                         <span className={styles.concluidas}>Concluídas</span>
-                        <span className={styles.number}>{tasks?.length}</span>
+                        <span className={styles.number}>{activeQuantity?.length}</span>
                     </div>
                 </div>
-                {tasks?.length <= 0 ?
+                {tasks.length <= 0 ?
                     <div className={styles.tasksNull}>
                         <div>
                             <img src={Clipboard} alt="" />
@@ -53,15 +69,26 @@ export function Tasks() {
                             <p>Você ainda não tem tarefas cadastradas</p>
                             <p className={styles.noWeight}>Crie tarefas e organize seus itens a fazer</p>
                         </div>
-
                     </div>
                     :
-                    <div className={styles.tasksActive}>
-                        <Task description='' id={1} isChecked={true} />
-                    </div>
+                    <>
+                        {tasks.map(task => (
+                            <div className={styles.tasksActive}>
+                                <Task
+                                    onClick={() => handleRemove(task.id)}
+                                    description={task.description}
+                                    Id={task.id}
+                                    isChecked={task.isChecked}
+                                />
+                            </div>
+                        ))}
+
+                    </>
                 }
 
+
             </div>
-        </div>
+        </div >
     )
 }
+

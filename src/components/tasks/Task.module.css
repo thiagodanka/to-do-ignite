@@ -17,3 +17,7 @@
   margin:1.5rem;
   flex:1;
 }     
+.container button{
+border:none;
+background-color:transparent !important;
+}
