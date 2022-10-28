@@ -2,8 +2,11 @@ import styles from './Tasks.module.css'
 import add from '../../assets/img/add.svg'
 import Clipboard from '../../assets/img/Clipboard.svg'
 import { useState } from 'react'
-import trash from '../../assets/img/trash.svg'
+import React from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { Task } from './Task'
+
 
 
 
@@ -20,6 +23,7 @@ export function Tasks() {
             ...task,
             isChecked: !task.isChecked
         } : task)
+        toast.info('Alterado com sucesso');
         setTasks(toggleCompletion)
     }
     const [tasks, setTasks] = useState<TaskProps[]>([])
@@ -28,18 +32,26 @@ export function Tasks() {
 
     function handleNewTask(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
-        if (!description) return
+
+        if ((!description) || (!description.match(/[A-z0-9]/))) {
+            setDescription('')
+            toast.error('Digite caracteres válidos');
+            return
+        }
+
         const newTask: TaskProps = {
             id: Math.random(),
             description: description,
             isChecked: false,
         }
         setTasks(oldState => [...oldState, newTask])
+        toast.success('Tarefa criada ✔');
         setDescription('')
     }
 
     function handleRemove(id: number) {
         const searchTask = tasks.filter(task => task.id != id);
+        toast.warning('Tarefa deletada ✔');
         setTasks(searchTask)
     }
     const activeQuantity = tasks.filter(task => task.isChecked === true);
@@ -82,23 +94,42 @@ export function Tasks() {
                     </div>
                     :
                     <>
-                        {tasks.map(task => (
-                            <div key={task.id} className={styles.tasksActive}>
-                                <Task
-                                    setChecked={() => handleToggleTaskCompletion(task.id)}
-                                    Id={task.id}
-                                    description={task.description}
-                                    isChecked={task.isChecked}
-                                    onClick={() => handleRemove(task.id)}
-                                />
-                            </div>
-                        ))}
+                        {tasks.map(task => {
+                            let newDescription = task.description.substring(0, 250)
+                            if (newDescription.length >= 250) {
+                                newDescription = newDescription + '...'
+                            }
+                            return (
+                                <div key={task.id} className={styles.tasksActive}>
+                                    <Task
+                                        setChecked={() => handleToggleTaskCompletion(task.id)}
+                                        Id={task.id}
+                                        description={newDescription}
+                                        isChecked={task.isChecked}
+                                        onClick={() => handleRemove(task.id)}
+                                    />
+                                </div>
+                            )
+                        }
+                        )}
 
                     </>
                 }
 
 
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
         </div >
     )
 }

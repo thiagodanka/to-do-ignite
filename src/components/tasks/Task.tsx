@@ -9,10 +9,10 @@ interface TaskProps extends React.HTMLAttributes<HTMLButtonElement> {
     setChecked: () => void,
 }
 
-export function Task({ id, description, isChecked, setChecked, ...props }: TaskProps) {
+export function Task({ Id, description, isChecked, setChecked, ...props }: TaskProps) {
     return (
         <div className={styles.container}>
-            <input type="checkbox" checked={isChecked} />
+            <input type="checkbox" checked={isChecked} onChange={() => isChecked} />
             <label onClick={setChecked}></label  >
             <p className={isChecked ? styles.isChecked : ''}>{description}</p>
 

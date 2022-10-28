@@ -11,10 +11,15 @@
     align-items:center;
     font-size:14px;
     font-weight:400;
+   
   }
 .container p{
   margin:1.5rem;
   flex:1;
+
+  text-overflow: ellipsis;
+ 
+  
 }     
 .container button{
 border:none;
